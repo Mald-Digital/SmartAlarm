@@ -14,12 +14,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/hyper.js') }}" defer></script>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css" />
+    <!-- CSS from theme -->
     <link href="{{ asset('hyper/css/vendor/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('hyper/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('hyper/css/app.css') }}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -66,20 +65,18 @@
 
 @include('partials.right-sidebar')
 
+<!-- Theme JS -->
+<script src="{{ asset('hyper/js/app.js') }}"></script>
+<script src="{{ asset('hyper/js/vendor/Chart.bundle.min.js') }}"></script>
+<script src="{{ asset('hyper/js/vendor/jquery-jvectormap-1.2.2.min.js') }}"></script>
+<script src="{{ asset('hyper/js/vendor/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ asset('hyper/js/pages/demo.dashboard.js') }}"></script>
 
-<!-- bundle -->
-<script src="/hyper/js/app.js"></script>
-<!-- end bundle -->
+<!-- Third party -->
+<script src="{{ asset('js/push.js') }}"></script>
 
-{{--<!-- third party js -->--}}
-<script src="/hyper/js/vendor/Chart.bundle.min.js"></script>
-<script src="/hyper/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="/hyper/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
-{{--<!-- third party js ends -->--}}
-
-{{--<!-- demo app -->--}}
-<script src="/hyper/js/pages/demo.dashboard.js"></script>
-{{--<!-- end demo js-->--}}
+<!-- Custom JS -->
+<script src="{{ asset('js/script.js') }}"></script>
 
 </body>
 

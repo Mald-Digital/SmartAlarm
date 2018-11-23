@@ -12,23 +12,14 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/app.scss', 'public/css')
 
-    // Hyper theme scss
-    .sass('resources/hyper/src/scss/app.scss', 'public/css')
-    .sass('resources/hyper/src/scss/icons.scss', 'public/css')
-
-    // Hyper theme js
-    // mix.js('resources/hyper/dist/assets/js/app.min.js', 'public/js')
-    // mix.js('resources/hyper/src/js/hyper.js', 'public/js')
-    //
-    // mix.js('resources/hyper/dist/assets/js/vendor/Chart.bundle.min.js', 'public/js')
-    // mix.js('resources/hyper/dist/assets/js/vendor/jquery-jvectormap-1.2.2.min.js', 'public/js')
-    // mix.js('resources/hyper/dist/assets/js/vendor/jquery-jvectormap-world-mill-en.js', 'public/js')
-    //
-    // mix.js('resources/hyper/dist/assets/js/pages/demo.dashboard.js', 'public/js')
-
-    // Hyper images
+    // Hyper content
     mix.copyDirectory('resources/hyper/dist/assets', 'public/hyper');
+
+    // Js
+    mix.copy('resources/js/push.js', 'public/js/push.js');
+    mix.copy('resources/js/serviceWorker.min.js', 'public/js/serviceWorker.min.js');
+    mix.copy('resources/js/script.js', 'public/js/script.js');
 
 

@@ -14,11 +14,21 @@ class DeviceController extends Controller
         return view('pages.door', compact ('devices'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $device = Device::find($id);
 
+        // Toggle the status of the device
+        if ($device->status === 0) {
+            $device->status = 1;
+        }
+        else if ($device->status === 1) {
+            $device->status = 0;
+        }
 
-
-
-
+        $device->save();
+        return redirect()->back();
+    }
 
 
 
@@ -41,12 +51,6 @@ class DeviceController extends Controller
 
 
     public function edit($id)
-    {
-        //
-    }
-
-
-    public function update(Request $request, $id)
     {
         //
     }

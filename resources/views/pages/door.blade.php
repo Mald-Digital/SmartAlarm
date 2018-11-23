@@ -15,9 +15,10 @@
                         <thead>
                         <tr>
                             <th scope="col">Sensor</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Type</th>
-                            <th scope="col"></th>
+                            <th scope="col">Status</th>
+
+                            <!-- <th scope="col"></th> -->
                         </tr>
                         </thead>
 
@@ -26,11 +27,31 @@
                         @foreach($devices as $device)
                             <tr>
                                 <td>{{ $device->name }}</td>
-                                <td>{{ $device->status }}</td>
+                                <!-- <td>{{ $device->status }}</td> -->
                                 <td>{{ $device->type }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary">Open</button>
-                                    <button type="button" class="btn btn-secondary">Close</button>
+                                    <form method="POST" action="{{ route('devices.update', $device->id) }}" enctype="multipart/form-data">
+                                        {{ method_field('PUT') }}
+                                        {{ csrf_field() }}
+
+                                        <!-- Bool Switch-->
+                                        <input
+                                          name="sensor-status"
+                                          id="switch1"
+                                          type="checkbox"
+
+                                          @if($device->status == 1)
+                                            checked="checked"
+                                          @endif
+
+                                          data-switch="bool"
+                                          value="1"
+                                          onclick="test()"
+                                          onChange="this.form.submit()"
+                                        />
+                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
+                                    </form>
+
                                 </td>
                             </tr>
                         @endforeach

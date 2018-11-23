@@ -36,7 +36,7 @@
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="{{ url('/door') }}">Raam/deur sensor</a>
+                        <a href="{{ route('devices.index') }}">Raam/deur sensor</a>
                     </li>
                     <li>
                         <a href="pages-profile.html">Profile</a>
