@@ -1,114 +1,111 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Start rows -->
+<!-- Start rows -->
 
-    <!-- Start row -->
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
+  <!-- Start row -->
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
 
-                    <h4 class="header-title mb-3">Alarm</h4>
+            <!-- Alarm table -->
+            <div class="col-xl-6">
+              <h4 class="header-title mb-3">Alarm</h4>
+              <table class="table table-hover">
 
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">Alarm</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
+                <tbody>
+                  @foreach($alarms as $alarm)
+                  <tr>
+                    <td>{{ $alarm->name }}</td>
 
-                        <tbody>
+                    <td>
+                      <form method="POST" action="{{ route('alarm.update', $alarm->id) }}" enctype="multipart/form-data">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
 
-                        @foreach($devices as $device)
-                            <tr>
-                                <td>{{ $device->name }}</td>
-                                <td>{{ $device->type }}</td>
-                                <td>
-                                    <form method="POST" action="{{ route('devices.update', $device->id) }}" enctype="multipart/form-data">
-                                        {{ method_field('PUT') }}
-                                        {{ csrf_field() }}
+                        <!-- Bool Switch-->
+                        <input
+                        name="sensor-status"
+                        id="switch1"
+                        type="checkbox"
 
-                                        <!-- Bool Switch-->
-                                        <input
-                                          name="sensor-status"
-                                          id="switch1"
-                                          type="checkbox"
+                        @if($alarm->status == 1)
+                        checked="checked"
+                        @endif
 
-                                          @if($device->status == 1)
-                                            checked="checked"
-                                          @endif
+                        data-switch="bool"
+                        value="1"
+                        onclick="test()"
+                        onChange="this.form.submit()"
+                        />
+                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
+                      </form>
+                    </td>
 
-                                          data-switch="bool"
-                                          value="1"
-                                          onclick="test()"
-                                          onChange="this.form.submit()"
-                                        />
-                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
-                                    </form>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+            <!-- End alarm table -->
 
-                                </td>
-                            </tr>
-                        @endforeach
+            <!-- Devices table -->
+            <div class="col-xl-6">
+              <h4 class="header-title mb-3">Devices</h4>
+              <table class="table table-hover">
+                <tbody>
 
-                        </tbody>
-                    </table>
+                  @foreach ($alarm->devices as $device)
+                  <tr>
+                    <td>{{ $device->name }}</td>
 
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th scope="col">Sensor</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Status</th>
+                    <td>
 
-                            <!-- <th scope="col"></th> -->
-                        </tr>
-                        </thead>
+                      <form method="POST" action="{{ route('devices.update', $device->id) }}" enctype="multipart/form-data">
+                        {{ method_field('PUT') }}
+                        {{ csrf_field() }}
 
-                        <tbody>
+                        <!-- Bool Switch-->
+                        <input
+                        name="device-status{{ $device->id }}"
+                        id="device-switch{{$device->id}}"
+                        type="checkbox"
 
-                        @foreach($devices as $device)
-                            <tr>
-                                <td>{{ $device->name }}</td>
-                                <!-- <td>{{ $device->status }}</td> -->
-                                <td>{{ $device->type }}</td>
-                                <td>
-                                    <form method="POST" action="{{ route('devices.update', $device->id) }}" enctype="multipart/form-data">
-                                        {{ method_field('PUT') }}
-                                        {{ csrf_field() }}
+                        @if($device->status == 1)
+                        checked="checked"
+                        @endif
 
-                                        <!-- Bool Switch-->
-                                        <input
-                                          name="sensor-status"
-                                          id="switch1"
-                                          type="checkbox"
+                        data-switch="bool"
+                        value="1"
+                        onclick="test()"
+                        onChange="this.form.submit()"
+                        />
+                        <label for="device-switch{{ $device->id }}" data-on-label="On" data-off-label="Off"></label>
+                      </form>
+                    </td>
+                  </tr>
+                  @endforeach
 
-                                          @if($device->status == 1)
-                                            checked="checked"
-                                          @endif
+                </tbody>
+              </table>
+            </div><!-- end col -->
+            <!-- End devices table -->
 
-                                          data-switch="bool"
-                                          value="1"
-                                          onclick="test()"
-                                          onChange="this.form.submit()"
-                                        />
-                                        <label for="switch1" data-on-label="On" data-off-label="Off"></label>
-                                    </form>
+          </div><!-- end row -->
+        </div> <!-- end card-body-->
+      </div> <!-- end card-->
 
-                                </td>
-                            </tr>
-                        @endforeach
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title mb-3">Log</h4>
+        </div>
+      </div>
 
-                        </tbody>
-                    </table>
+    </div> <!-- end col -->
+  </div>
+  <!-- end row -->
 
-                </div> <!-- end card-body-->
-            </div> <!-- end card-->
-
-        </div> <!-- end col -->
-    </div>
-    <!-- end row -->
-
-    <!-- end rows -->
+<!-- end rows -->
 @endsection

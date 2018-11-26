@@ -15,6 +15,7 @@ class CreateDevicesTable extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('alarm_id');
             $table->string('name');
             $table->boolean('status');
             $table->string('type');

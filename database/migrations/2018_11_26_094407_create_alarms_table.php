@@ -13,7 +13,7 @@ class CreateAlarmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('alarm', function (Blueprint $table) {
+        Schema::create('alarms', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->boolean('status');
@@ -28,6 +28,6 @@ class CreateAlarmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alarm');
+        Schema::dropIfExists('alarms');
     }
 }

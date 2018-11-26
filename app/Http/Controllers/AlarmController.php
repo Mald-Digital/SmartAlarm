@@ -3,33 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Alarm;
 use App\Device;
 
-class DeviceController extends Controller
+class AlarmController extends Controller
 {
 
     public function index(Request $request)
     {
-        $devices = Device::all();
-        return view('pages.remote', compact ('devices'));
+      $alarms = Alarm::all();
+      return view('pages.remote', compact ('alarms'));
     }
 
     public function update(Request $request, $id)
     {
-        $device = Device::find($id);
+        $alarm = Alarm::find($id);
 
         // Toggle the status of the device
-        if ($device->status === 0) {
-            $device->status = 1;
+        if ($alarm->status === 0) {
+            $alarm->status = 1;
         }
-        else if ($device->status === 1) {
-            $device->status = 0;
+        else if ($alarm->status === 1) {
+            $alarm->status = 0;
         }
 
-        $device->save();
+        $alarm->save();
         return redirect()->back();
     }
+
+
 
 
 
@@ -55,7 +58,6 @@ class DeviceController extends Controller
     {
         //
     }
-
 
     public function destroy($id)
     {
