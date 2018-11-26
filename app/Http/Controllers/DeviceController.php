@@ -11,7 +11,7 @@ class DeviceController extends Controller
     public function index(Request $request)
     {
         $devices = Device::all();
-        return view('pages.door', compact ('devices'));
+        return view('pages.remote', compact ('devices'));
     }
 
     public function update(Request $request, $id)
