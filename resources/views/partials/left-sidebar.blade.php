@@ -36,7 +36,7 @@
                 </a>
                 <ul class="side-nav-second-level" aria-expanded="false">
                     <li>
-                        <a href="{{ route('devices.index') }}">Remote</a>
+                        <a href="{{ route('alarm.index') }}">Remote</a>
                     </li>
                     <li>
                         <a href="pages-profile.html">Profile</a>
