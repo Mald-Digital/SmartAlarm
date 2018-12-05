@@ -62,27 +62,14 @@
                     <td>{{ $device->name }}</td>
 
                     <td>
-
-                      <form method="POST" action="{{ route('devices.update', $device->id) }}" enctype="multipart/form-data">
-                        {{ method_field('PUT') }}
+                      <form method="POST" action="{{ route('event.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
-                        <!-- Bool Switch-->
-                        <input
-                        name="device-status{{ $device->id }}"
-                        id="device-switch{{$device->id}}"
-                        type="checkbox"
+                        <input name="device_id" type="hidden" value="{{ $device->id }}">
+                        <input name="device_status" type="hidden" value="{{ $device->status }}">
+                        <input name="device_type" type="hidden" value="{{ $device->type }}">
 
-                        @if($device->status == 1)
-                        checked="checked"
-                        @endif
-
-                        data-switch="bool"
-                        value="1"
-                        onclick="test()"
-                        onChange="this.form.submit()"
-                        />
-                        <label for="device-switch{{ $device->id }}" data-on-label="On" data-off-label="Off"></label>
+                        <button class="btn btn-primary" type="submit">Trigger</button>
                       </form>
                     </td>
                   </tr>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Alarm;
 use App\Device;
 
+use App\Events\SensorTriggerd;
+
 class DeviceController extends Controller
 {
 
@@ -28,6 +30,10 @@ class DeviceController extends Controller
         }
 
         $device->save();
+
+        // Trigger the CommentAdded event
+        event(new SensorTriggerd($device));
+
         return redirect()->back();
     }
 
