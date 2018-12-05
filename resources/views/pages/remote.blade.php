@@ -65,6 +65,7 @@
                       <form method="POST" action="{{ route('event.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
+                        <!-- Hidden fields -->
                         <input name="device_id" type="hidden" value="{{ $device->id }}">
                         <input name="device_status" type="hidden" value="{{ $device->status }}">
                         <input name="device_type" type="hidden" value="{{ $device->type }}">

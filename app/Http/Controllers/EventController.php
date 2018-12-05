@@ -11,9 +11,9 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-      $device_id = request('device_id');
-      $device_status = request('device_status');
-      $device_type = request('device_type');
+      $device_id = $request->device_id;
+      $device_status = $request->device_status;
+      $device_type = $request->device_type;
 
       $createEvent = Event::Create(
           [
