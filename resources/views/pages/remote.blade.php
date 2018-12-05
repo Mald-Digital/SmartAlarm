@@ -67,8 +67,6 @@
 
                         <!-- Hidden fields -->
                         <input name="device_id" type="hidden" value="{{ $device->id }}">
-                        <input name="device_status" type="hidden" value="{{ $device->status }}">
-                        <input name="device_type" type="hidden" value="{{ $device->type }}">
 
                         <button class="btn btn-primary" type="submit">Trigger</button>
                       </form>
