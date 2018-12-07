@@ -34,7 +34,10 @@ class LogDoorOpenState
           [
               'alarm_id' => $device->alarm_id,
               'device_id' => $device->id,
+              'device_type' => $device->type,
               'status' => $device->status
           ]);
+
+          Event::checkResidents();
     }
 }

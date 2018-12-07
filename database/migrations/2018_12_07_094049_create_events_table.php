@@ -17,6 +17,7 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->integer('alarm_id');
             $table->integer('device_id');
+            $table->string('device_type');
             $table->string('status');
             $table->timestamps();
         });

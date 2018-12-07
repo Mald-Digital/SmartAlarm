@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Alarm;
 use App\Device;
 
+use App\Jobs\ProcessEvents;
 use App\Events\MotionDetected;
 use App\Events\DoorOpendDetected;
 use App\Events\DoorClosedDetected;
@@ -31,12 +32,17 @@ class DeviceController extends Controller
         if ($device->status === 'closed') {
             $device->status = 'open';
 
+            // ProcessEvents::dispatch($request);
+                // ->delay(now()->addSeconds(3));
+
             if($device->type == 'contact') {
               event(new DoorOpendDetected($id));
             }
         }
         else if ($device->status === 'open') {
             $device->status = 'closed';
+            // ProcessEvents::dispatch($request)
+            //     ->delay(now()->addSeconds(3));
 
             if($device->type == 'contact') {
               event(new DoorClosedDetected($id));

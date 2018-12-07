@@ -21,3 +21,5 @@ Route::resource('device', 'DeviceController');
 Route::resource('alarm', 'AlarmController');
 Route::resource('event', 'EventController');
 // Route::get('/alarm', 'AlarmController@index');
+
+Route::get('/test', 'EventController@index');

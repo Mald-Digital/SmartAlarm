@@ -31,11 +31,19 @@ class LogMotionState
     {
 
       $device = Device::find($data->device_id);
+
+      // dd($device->type);
+
       $createEvent = Event::Create(
           [
               'alarm_id' => $device->alarm_id,
               'device_id' => $device->id,
+              'device_type' => $device->type,
               'status' => $device->status
           ]);
+
+          Event::checkResidents();
     }
+
+
 }

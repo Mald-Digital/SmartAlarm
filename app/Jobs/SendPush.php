@@ -2,28 +2,24 @@
 
 namespace App\Jobs;
 
-use App\Device;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ProcessEvents implements ShouldQueue
+class SendPush implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    //protected $device_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct()
     {
-        //$this->device_id = $request->device_id;
+        //
     }
 
     /**
@@ -33,12 +29,6 @@ class ProcessEvents implements ShouldQueue
      */
     public function handle()
     {
-      var_dump ('testtesttest');
-      // var_dump('changing the status: ' .  $this->device_id . '');
-      //
-      // $device = Device::find($this->device_id);
-      // $device->status = 'active';
-      // $device->save();
-
+        $json = json_decode(file_get_contents('http://api.mijnsmartalarm.nl/API/whatsapp.php?message=Het%20alarm%20staat%20niet%20aan'), true);
     }
 }
