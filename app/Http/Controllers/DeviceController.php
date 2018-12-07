@@ -23,6 +23,10 @@ class DeviceController extends Controller
     {
         $device = Device::find($id);
 
+        if($device->type == 'motion') {
+          event(new MotionDetected($id));
+        }
+
         // Toggle the status of the device
         if ($device->status === 0) {
             $device->status = 1;
@@ -40,7 +44,6 @@ class DeviceController extends Controller
         }
 
         $device->save();
-
         return redirect()->back();
     }
 

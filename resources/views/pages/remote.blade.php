@@ -65,12 +65,9 @@
                     <!-- Motion devices -->
                     @if($device->type == 'motion')
                     <td>
-                      <form method="POST" action="{{ route('event.store') }}" enctype="multipart/form-data">
+                      <form method="POST" action="{{ route('device.update', $device->id) }}" enctype="multipart/form-data">
+                        {{ method_field('PUT') }}
                         {{ csrf_field() }}
-
-                        <!-- Hidden fields -->
-                        <input name="device_type" type="hidden" value="{{ $device->type }}">
-                        <input name="device_id" type="hidden" value="{{ $device->id }}">
 
                         <button class="btn btn-primary" type="submit">Trigger</button>
                       </form>

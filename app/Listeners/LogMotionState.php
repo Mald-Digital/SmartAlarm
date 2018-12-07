@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Event;
+use App\Device;
 
 use App\Events\MotionDetected;
 use Illuminate\Queue\InteractsWithQueue;
@@ -28,10 +29,12 @@ class LogMotionState
      */
     public function handle(MotionDetected $data)
     {
-        $createEvent = Event::Create(
-            [
-                'device_id' => $data->device_id,
-                'status' => 'motion detected'
-            ]);
+
+      $device = Device::find($data->device_id);
+      $createEvent = Event::Create(
+          [
+              'device_id' => $device->id,
+              'status' => $device->status
+          ]);
     }
 }
