@@ -2,8 +2,6 @@
 
 namespace App\Events;
 
-use App\Device;
-
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -12,21 +10,20 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-
-class SensorTriggerd
+class DoorClosedDetected
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $device;
+    public $device_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Device $device)
+    public function __construct($device_id)
     {
-        $this->device = $device;
+        $this->device_id = $device_id;
     }
 
     /**

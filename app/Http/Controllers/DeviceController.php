@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Alarm;
 use App\Device;
 
-use App\Events\SensorTriggerd;
+use App\Events\MotionDetected;
+use App\Events\DoorOpendDetected;
+use App\Events\DoorClosedDetected;
 
 class DeviceController extends Controller
 {
@@ -24,15 +26,20 @@ class DeviceController extends Controller
         // Toggle the status of the device
         if ($device->status === 0) {
             $device->status = 1;
+
+            if($device->type == 'contact') {
+              event(new DoorOpendDetected($id));
+            }
         }
         else if ($device->status === 1) {
             $device->status = 0;
+
+            if($device->type == 'contact') {
+              event(new DoorClosedDetected($id));
+            }
         }
 
         $device->save();
-
-        // Trigger the CommentAdded event
-        event(new SensorTriggerd($device));
 
         return redirect()->back();
     }

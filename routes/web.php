@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('devices', 'DeviceController');
+Route::resource('device', 'DeviceController');
 Route::resource('alarm', 'AlarmController');
 Route::resource('event', 'EventController');
 // Route::get('/alarm', 'AlarmController@index');

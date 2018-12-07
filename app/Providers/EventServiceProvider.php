@@ -19,8 +19,14 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        'App\Events\SensorTriggerd' => [
-          'App\Listeners\ChangeSensorState',
+        'App\Events\MotionDetected' => [
+          'App\Listeners\LogMotionState',
+        ],
+        'App\Events\DoorOpendDetected' => [
+          'App\Listeners\LogDoorOpenState',
+        ],
+        'App\Events\DoorClosedDetected' => [
+          'App\Listeners\LogDoorClosedState',
         ],
     ];
 

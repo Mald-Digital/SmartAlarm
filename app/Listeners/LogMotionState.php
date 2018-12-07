@@ -2,14 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\SensorTriggerd;
+use App\Event;
+
+use App\Events\MotionDetected;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-
-// use App\
-
-class ChangeSensorState
+class LogMotionState
 {
     /**
      * Create the event listener.
@@ -24,11 +23,15 @@ class ChangeSensorState
     /**
      * Handle the event.
      *
-     * @param  SensorTriggerd  $event
+     * @param  MotionDetected  $event
      * @return void
      */
-    public function handle(SensorTriggerd $event)
+    public function handle(MotionDetected $data)
     {
-        dd($event->device->status);
+        $createEvent = Event::Create(
+            [
+                'device_id' => $data->device_id,
+                'status' => 'motion detected'
+            ]);
     }
 }
