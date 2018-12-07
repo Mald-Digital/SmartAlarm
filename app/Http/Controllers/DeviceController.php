@@ -28,15 +28,15 @@ class DeviceController extends Controller
         }
 
         // Toggle the status of the device
-        if ($device->status === 0) {
-            $device->status = 1;
+        if ($device->status === 'closed') {
+            $device->status = 'open';
 
             if($device->type == 'contact') {
               event(new DoorOpendDetected($id));
             }
         }
-        else if ($device->status === 1) {
-            $device->status = 0;
+        else if ($device->status === 'open') {
+            $device->status = 'closed';
 
             if($device->type == 'contact') {
               event(new DoorClosedDetected($id));

@@ -21,11 +21,11 @@ class AlarmController extends Controller
         $alarm = Alarm::find($id);
 
         // Toggle the status of the device
-        if ($alarm->status === 0) {
-            $alarm->status = 1;
+        if ($alarm->status === 'off') {
+            $alarm->status = 'on';
         }
-        else if ($alarm->status === 1) {
-            $alarm->status = 0;
+        else if ($alarm->status === 'on') {
+            $alarm->status = 'off';
         }
 
         $alarm->save();

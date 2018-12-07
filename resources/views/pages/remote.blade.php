@@ -31,8 +31,8 @@
                         id="switch1"
                         type="checkbox"
 
-                        @if($alarm->status == 1)
-                        checked="checked"
+                        @if($alarm->status == 'on')
+                          checked="checked"
                         @endif
 
                         data-switch="bool"
@@ -88,7 +88,7 @@
                         id="switch2"
                         type="checkbox"
 
-                        @if($device->status == 1)
+                        @if($device->status == 'open')
                           checked="checked"
                         @endif
 

@@ -33,6 +33,7 @@ class LogMotionState
       $device = Device::find($data->device_id);
       $createEvent = Event::Create(
           [
+              'alarm_id' => $device->alarm_id,
               'device_id' => $device->id,
               'status' => $device->status
           ]);
