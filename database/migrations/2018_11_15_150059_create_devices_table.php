@@ -17,8 +17,9 @@ class CreateDevicesTable extends Migration
             $table->increments('id');
             $table->integer('alarm_id');
             $table->string('name');
-            $table->string('status');
             $table->string('type');
+            $table->string('status');
+            $table->string('location');
 
             $table->timestamps();
         });

@@ -19,6 +19,7 @@ class CreateEventsTable extends Migration
             $table->integer('device_id');
             $table->string('device_type');
             $table->string('status');
+            $table->string('location');
             $table->timestamps();
         });
     }
