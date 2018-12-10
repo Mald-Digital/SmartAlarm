@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Alarm;
 use App\Device;
 
-use App\Jobs\ProcessEvents;
+use App\Jobs\ChangeStatus;
+
+use Illuminate\Http\Request;
+
 use App\Events\MotionDetected;
 use App\Events\DoorOpendDetected;
 use App\Events\DoorClosedDetected;
@@ -28,21 +30,15 @@ class DeviceController extends Controller
           event(new MotionDetected($id));
         }
 
-        // Toggle the status of the device
         if ($device->status === 'closed') {
-            $device->status = 'open';
-
-            // ProcessEvents::dispatch($request);
-                // ->delay(now()->addSeconds(3));
+            ChangeStatus::dispatch($id);
 
             if($device->type == 'contact') {
               event(new DoorOpendDetected($id));
             }
         }
         else if ($device->status === 'open') {
-            $device->status = 'closed';
-            // ProcessEvents::dispatch($request)
-            //     ->delay(now()->addSeconds(3));
+            ChangeStatus::dispatch($id);
 
             if($device->type == 'contact') {
               event(new DoorClosedDetected($id));

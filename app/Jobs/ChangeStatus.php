@@ -10,20 +10,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ProcessEvents implements ShouldQueue
+class ChangeStatus implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    //protected $device_id;
+    protected $device_id;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($request)
+    public function __construct($id)
     {
-        //$this->device_id = $request->device_id;
+        $this->device_id = $id;
     }
 
     /**
@@ -33,12 +33,15 @@ class ProcessEvents implements ShouldQueue
      */
     public function handle()
     {
-      var_dump ('testtesttest');
-      // var_dump('changing the status: ' .  $this->device_id . '');
-      //
-      // $device = Device::find($this->device_id);
-      // $device->status = 'active';
-      // $device->save();
+      $device = Device::find($this->device_id);
 
+      if ($device->status === 'closed') {
+          $device->status = 'open';
+      }
+      else if($device->status == 'open') {
+          $device->status = 'closed';
+      }
+      
+      $device->save();
     }
 }

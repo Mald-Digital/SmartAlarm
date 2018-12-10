@@ -24,7 +24,7 @@ class Event extends Model
           if($latestEvents[0]->device_type == 'contact' && $latestEvents[1]->device_type == 'motion'){
 
             SendPush::dispatch()
-                ->delay(now()->addSeconds(3));
+                ->delay(now()->addSeconds(1));
           }
           else {
             echo "er is iemand thuis";
