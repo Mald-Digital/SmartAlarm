@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Alarm;
 use App\Device;
 
+use App\Http\Requests;
+use App\Http\Resources\Alarm as AlarmResource;
+
 class AlarmController extends Controller
 {
 
