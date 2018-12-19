@@ -10,7 +10,9 @@ class EventController extends Controller
 
   public function index()
   {
-      $events = Event::checkResidents();
+      // $events = Event::checkResidents();
+      $events = Event::take(100)->orderBy('id', 'desc')->get();
+      return view('pages.events', compact ('events'));
   }
 
 }

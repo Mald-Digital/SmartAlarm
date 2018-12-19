@@ -15,11 +15,11 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('alarm_id');
-            $table->integer('device_id');
+            $table->integer('unit_no');
             $table->string('device_type');
             $table->string('status');
-            $table->string('location');
+            $table->integer('rssi');
+            $table->string('time');
             $table->timestamps();
         });
     }

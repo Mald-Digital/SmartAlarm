@@ -163,7 +163,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+         'Dusterio\PlainSqs\Integrations\LaravelServiceProvider',
         /*
          * Application Service Providers...
          */

@@ -57,6 +57,15 @@ return [
             'region' => env('SQS_REGION', 'us-east-1'),
         ],
 
+        'sqs-plain' => [
+            'driver' => 'sqs-plain',
+            'key'    => env('AWS_KEY', 'aws_key'),
+            'secret' => env('AWS_SECRET', 'aws_secret'),
+            'prefix' => env('AWS_PREFIX', 'aws_prefix'),
+            'queue'  => env('AWS_QUEUE', 'aws_queue'),
+            'region' => env('AWS_REGION', 'aws_region'),
+        ],
+
         'redis' => [
             'driver' => 'redis',
             'connection' => 'default',

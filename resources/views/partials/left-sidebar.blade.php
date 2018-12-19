@@ -29,6 +29,13 @@
             </li>
 
             <li class="side-nav-item">
+                <a href="/event" class="side-nav-link">
+                    <i class="dripicons-meter"></i>
+                    <span> Events </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
                 <a href="javascript: void(0);" class="side-nav-link">
                     <i class="dripicons-copy"></i>
                     <span> Pages </span>
