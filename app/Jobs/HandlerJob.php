@@ -21,14 +21,7 @@ class HandlerJob
   public function handle(LaravelJob $job, array $data)
   {
 
-    $client = SqsClient::factory(array(
-      'profile' => '<profile in your aws credentials file>',
-      'region'  => '<region name>'
-    ));
-
-
-
-
+  
       // This is incoming JSON payload, already decoded to an array
       /*
       if($data['base']['unitId'] == '104912') {
