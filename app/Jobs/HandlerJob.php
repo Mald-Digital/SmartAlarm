@@ -21,7 +21,30 @@ class HandlerJob
   public function handle(LaravelJob $job, array $data)
   {
 
-  
+    $client = SqsClient::factory(array(
+      'key'    => env("SQS_KEY", "my_sqs_key"),
+      'secret' => env("SQS_SECRET", "my_sqs_secret"),
+      'region'  => env("SQS_REGION", "my_sqs_region")
+    ));
+
+    $result = $client->createQueue(array('QueueName' => env("SQS_QUEUE", "my_sqs_queue")));
+    $queueUrl = $result->get(env("SQS_PREFIX", "my_queue_prefix"));
+
+    $result = $client->receiveMessage(array(
+      'QueueUrl' => $queueUrl,
+    ));
+
+    foreach ($result->getPath('Messages/*/Body') as $messageBody) {
+        // Do something with the message
+        var_dump($messageBody);
+    }
+
+
+
+    /* ------------------------------------------- */
+    /*    Old, working with the plain-sqs libary   *
+    /* ------------------------------------------- */
+
       // This is incoming JSON payload, already decoded to an array
       /*
       if($data['base']['unitId'] == '104912') {
