@@ -15,6 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('messageId');
             $table->integer('unit_no');
             $table->string('device_type');
             $table->string('status');

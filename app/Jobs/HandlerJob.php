@@ -22,22 +22,37 @@ class HandlerJob
   {
 
     $client = SqsClient::factory(array(
-      'key'    => env("SQS_KEY", "my_sqs_key"),
-      'secret' => env("SQS_SECRET", "my_sqs_secret"),
-      'region'  => env("SQS_REGION", "my_sqs_region")
+        'region'  => 'eu-west-1',
+        'version' => 'latest',
+         'credentials' => [
+            'key'    => env("SQS_KEY", "my_sqs_key"),
+            'secret' => env("SQS_SECRET", "my_sqs_secret"),
+        ],
     ));
-
-    $result = $client->createQueue(array('QueueName' => env("SQS_QUEUE", "my_sqs_queue")));
-    $queueUrl = $result->get(env("SQS_PREFIX", "my_queue_prefix"));
-
     $result = $client->receiveMessage(array(
-      'QueueUrl' => $queueUrl,
+        'QueueUrl' => 'https://sqs.eu-west-1.amazonaws.com/509605125032/smartalarm-events.fifo',
+        'MaxNumberOfMessages' => 5
     ));
+    if($result->getPath('Messages')) {
+        foreach ($result->getPath('Messages') as $message) {
+            try {
+                echo $message['Body'].'<br>';
 
-    foreach ($result->getPath('Messages/*/Body') as $messageBody) {
-        // Do something with the message
-        var_dump($messageBody);
+                $client->deleteMessage(array(
+                    'QueueUrl' => Yii::$app->params['aws']['sqs']['postQueue'],
+                    'ReceiptHandle' => $message['ReceiptHandle'],
+                ));
+
+            } catch (app\handlers\HandlerException $e){
+                /* $client->deleteMessage(array(
+                    'QueueUrl' => Yii::$app->params['aws']['sqs']['postQueue'],
+                    'ReceiptHandle' => $message['ReceiptHandle'],
+                ));
+                */
+            }
+        }
     }
+
 
 
 

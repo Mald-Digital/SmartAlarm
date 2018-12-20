@@ -19,6 +19,9 @@ class EventController extends Controller
     {
         $job = new \App\Jobs\ProcessSqs();
         $job->handle();
+        echo date('H:i:s');
+        echo '<meta http-equiv="refresh" content="0;">';
+        exit();
     }
 
 }
