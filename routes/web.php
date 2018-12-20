@@ -20,3 +20,6 @@ Auth::routes();
 Route::resource('device', 'DeviceController');
 Route::resource('alarm', 'AlarmController');
 Route::resource('event', 'EventController');
+
+Route::get('test-sqs', 'EventController@testProcessSqs')->name('test-sqs');
+

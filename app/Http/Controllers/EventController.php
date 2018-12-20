@@ -15,4 +15,10 @@ class EventController extends Controller
       return view('pages.events', compact ('events'));
   }
 
+    public function testProcessSqs()
+    {
+        $job = new \App\Jobs\ProcessSqs();
+        $job->handle();
+    }
+
 }
