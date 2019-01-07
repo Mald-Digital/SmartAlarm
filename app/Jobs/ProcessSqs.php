@@ -45,15 +45,14 @@ class ProcessSqs implements ShouldQueue
             'MaxNumberOfMessages' => 10
         ]);
 
+        /* ****************************************************************************
+          Part 1
+          1. Get results from Queue
+          2. Check if the message is from my base
+          3. If it is from my base, save to local db
+          4. Delete from queue
+        **************************************************************************** */
         if($result->getPath('Messages')) {
-
-            /* ****************************************************************************
-              Part 1
-              1. Get results from Queue
-              2. Check if the message is from my base
-              3. If it is from my base, save to local db
-              4. Delete from queue
-            **************************************************************************** */
             foreach ($result->getPath('Messages') as $message) {
                 try {
 
@@ -84,10 +83,10 @@ class ProcessSqs implements ShouldQueue
                       }
 
                       // Delete message from queue
-                      // $client->deleteMessage(array(
-                      //     'QueueUrl' => $QueueUrl,
-                      //     'ReceiptHandle' => $message['ReceiptHandle'],
-                      // ));
+                      $result = $client->deleteMessage(array(
+                          'QueueUrl' => $QueueUrl,
+                          'ReceiptHandle' => $message['ReceiptHandle'],
+                      ));
 
                     }
 
