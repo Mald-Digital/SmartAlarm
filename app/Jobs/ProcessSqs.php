@@ -46,6 +46,14 @@ class ProcessSqs implements ShouldQueue
         ]);
 
         if($result->getPath('Messages')) {
+
+            /* ****************************************************************************
+              Part 1
+              1. Get results from Queue
+              2. Check if the message is from my base
+              3. If it is from my base, save to local db
+              4. Delete from queue
+            **************************************************************************** */
             foreach ($result->getPath('Messages') as $message) {
                 try {
 
@@ -74,53 +82,61 @@ class ProcessSqs implements ShouldQueue
                                 'time' => $data['time']
                             ]);
                       }
+
+                      // Delete message from queue
+                      // $client->deleteMessage(array(
+                      //     'QueueUrl' => $QueueUrl,
+                      //     'ReceiptHandle' => $message['ReceiptHandle'],
+                      // ));
+
                     }
 
-                    // Delete message from queue
-                    /*
-                    $client->deleteMessage(array(
-                        'QueueUrl' => $QueueUrl,
-                        'ReceiptHandle' => $message['ReceiptHandle'],
-                    ));
-                    */
-
-                    $doorUnitNo = 1; // unit number from the door sensor
-                    $timeSpan = 10; // Timespan between door and motion sensor trigger
-
-                    // Check if door is the latest event
-                    $latestEvents = Event::orderBy('id', 'desc')->take(10)->get();
-                    if ($latestEvents[0]->device_type == 'Door/Window Contact' && $latestEvents[0]->unit_no == $doorUnitNo && $latestEvents[0]->status == 'Open' || $latestEvents[0]->status == 'Close') {
-
-                      // Get the door update time
-                      $doorTime = $latestEvents[0]->updated_at; // Time door sensor is triggerd
-
-                      // Get the latest events that occured
-                      foreach ($latestEvents as $event) {
-                        // Check if event type = motion && within timespan
-                        if($event->device_type == 'Motion Detector' && $event->updated_at->diffInSeconds($doorTime) < $timeSpan) {
-
-                          /* Problem
-                          Because this is a loop and we are in a daemon this keeps sending whatsapps
-                          possible solutions:
-                          1. Give the devices an input field push_send with a default of false and toggle when send
-                          2. Check the current time and the doortime and if within x seconds send whatsapp
-                          * end problem */
-
-                            // Send whatsapp
-                            // $json = json_decode(file_get_contents('http://api.mijnsmartalarm.nl/API/whatsapp.php?message=Het%20alarm%20staat%20niet%20aan'), true);
-                        }
-                      }
-                    }
-
-                } catch (app\handlers\HandlerException $e){
-                    /* $client->deleteMessage(array(
-                        'QueueUrl' => Yii::$app->params['aws']['sqs']['postQueue'],
-                        'ReceiptHandle' => $message['ReceiptHandle'],
-                    ));
-                    */
+                  } catch (app\handlers\HandlerException $e){
+                      /* $client->deleteMessage(array(
+                          'QueueUrl' => Yii::$app->params['aws']['sqs']['postQueue'],
+                          'ReceiptHandle' => $message['ReceiptHandle'],
+                      ));
+                      */
+                  }
                 }
-            }
-        }
 
+                /* ****************************************************************************
+                  Part 2
+                  1. Get the latest records from events table from local db
+                  2. Check if the latest record is door/window contact
+                  3. Check if within timespan there has been motion detected
+                  4. Send message
+                **************************************************************************** */
+
+                $doorUnitNo = 1; // unit number from the door sensor
+                $timeSpan = 10; // Timespan between door and motion sensor trigger
+
+                // Check if door is the latest event
+                $latestEvents = Event::orderBy('id', 'desc')->take(10)->get();
+                if ($latestEvents[0]->device_type == 'Door/Window Contact' && $latestEvents[0]->unit_no == $doorUnitNo) {
+
+                  // Get the door update time
+                  $doorTime = $latestEvents[0]->updated_at; // Time door sensor is triggerd
+
+                  // Get the latest events that occured
+                  foreach ($latestEvents as $event) {
+                    // Check if event type = motion && within timespan
+                    if($event->device_type == 'Motion Detector' && $event->updated_at->diffInSeconds($doorTime) < $timeSpan) {
+
+                      /* Problem
+                      Because this is a loop this keeps sending messages
+                      possible solutions:
+                      1. Give the devices an input field push_send with a default of false and toggle when send
+                      2. Check the current time and the doortime and if within x seconds send whatsapp
+                      * end problem */
+
+                      // Send whatsapp
+                      // $json = json_decode(file_get_contents('http://api.mijnsmartalarm.nl/API/whatsapp.php?message=Het%20alarm%20staat%20niet%20aan'), true);
+                    }
+                  }
+                }
+
+
+        }
     }
 }
