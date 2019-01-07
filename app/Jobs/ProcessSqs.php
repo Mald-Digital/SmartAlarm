@@ -64,9 +64,8 @@ class ProcessSqs implements ShouldQueue
                       // Check if the messageId is unique
                       $event = Event::where('messageId', '=', $messageId)->first();
                       if ($event === null) {
-                        // Create the event
-                        $createEvent = Event::create(
-                            [
+                        // Create the event in db
+                        $createEvent = Event::create([
                                 'messageId' => $messageId,
                                 'unit_no' => $data['unitNo'],
                                 'device_type' => $data['device']['type'],
@@ -76,6 +75,14 @@ class ProcessSqs implements ShouldQueue
                             ]);
                       }
                     }
+
+                    // Delete message from queue
+                    /*
+                    $client->deleteMessage(array(
+                        'QueueUrl' => $QueueUrl,
+                        'ReceiptHandle' => $message['ReceiptHandle'],
+                    ));
+                    */
 
                     $doorUnitNo = 1; // unit number from the door sensor
                     $timeSpan = 10; // Timespan between door and motion sensor trigger
@@ -98,21 +105,12 @@ class ProcessSqs implements ShouldQueue
                           1. Give the devices an input field push_send with a default of false and toggle when send
                           2. Check the current time and the doortime and if within x seconds send whatsapp
                           * end problem */
-                          
+
                             // Send whatsapp
                             // $json = json_decode(file_get_contents('http://api.mijnsmartalarm.nl/API/whatsapp.php?message=Het%20alarm%20staat%20niet%20aan'), true);
                         }
                       }
                     }
-
-                    // echo $message['Body'].'<br>';
-
-                    /*
-                      $client->deleteMessage(array(
-                          'QueueUrl' => $QueueUrl,
-                          'ReceiptHandle' => $message['ReceiptHandle'],
-                      ));
-                    */
 
                 } catch (app\handlers\HandlerException $e){
                     /* $client->deleteMessage(array(
